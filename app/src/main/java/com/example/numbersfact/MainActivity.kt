@@ -37,8 +37,7 @@ class MainActivity : AppCompatActivity() {
 
                 doAsync {
                     val apiResponse = URL(url).readText()
-
-                    Log.d("INFO", apiResponse)
+                    
 
                     val FactAboutNum = JSONObject(apiResponse).getString("text")
 
