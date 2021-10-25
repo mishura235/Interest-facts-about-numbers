@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
     private var User_Num:EditText? = null
     private var Get_Fact:Button? = null
     private var Fact:TextView? = null
-
+    lateinit var Get_Random:Button
 
 
     @SuppressLint("SetTextI18n")
@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         User_Num = findViewById(R.id.user_num)
         Get_Fact = findViewById(R.id.get_fact)
         Fact = findViewById(R.id.Fact)
+        Get_Random = findViewById(R.id.get_fact2)
 
         Get_Fact?.setOnClickListener{
             if(User_Num?.text?.toString()?.trim()?.equals("")!!)
@@ -46,5 +47,23 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        Get_Random.setOnClickListener{
+
+            val num = (1..100).random()
+            val url = "http://numbersapi.com/$num?json"
+
+            doAsync {
+                val apiResponse = URL(url).readText()
+
+
+                val FactAboutNum = JSONObject(apiResponse).getString("text")
+
+                Fact?.text = "Fact: $FactAboutNum"
+
+                }
+            }
+        }
+
+
+
     }
-}
