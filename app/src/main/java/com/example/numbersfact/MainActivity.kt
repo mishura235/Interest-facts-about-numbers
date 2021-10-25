@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
                 doAsync {
                     val apiResponse = URL(url).readText()
-                    
+
 
                     val FactAboutNum = JSONObject(apiResponse).getString("text")
 
