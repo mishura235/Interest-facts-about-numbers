@@ -9,8 +9,18 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import org.jetbrains.anko.doAsync
+import com.example.numbersfact.api.ApiRequests
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
+import retrofit2.Retrofit
+import retrofit2.awaitResponse
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 import java.net.URL
 
 class MainActivity : AppCompatActivity() {
@@ -18,9 +28,14 @@ class MainActivity : AppCompatActivity() {
     private var Get_Fact:Button? = null
     private var Fact:TextView? = null
     lateinit var Get_Random:Button
+    val URL = "http://numbersapi.com/"
+    val API = Retrofit.Builder()
+        .baseUrl(URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+        .create(ApiRequests::class.java)
 
 
-    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -33,37 +48,36 @@ class MainActivity : AppCompatActivity() {
             if(User_Num?.text?.toString()?.trim()?.equals("")!!)
                 Toast.makeText(this,"Enter the number",Toast.LENGTH_LONG).show()
             else{
-                val number = User_Num?.text.toString()
-                val url = "http://numbersapi.com/$number?json"
+                val num = User_Num?.text.toString()
 
-                doAsync {
-                    val apiResponse = URL(url).readText()
+                getFact(num)
 
-
-                    val FactAboutNum = JSONObject(apiResponse).getString("text")
-
-                    Fact?.text = "Fact: $FactAboutNum"
-
-                }
             }
         }
         Get_Random.setOnClickListener{
-
-            val num = (1..100).random()
-            val url = "http://numbersapi.com/$num?json"
-
-            doAsync {
-                val apiResponse = URL(url).readText()
-
-
-                val FactAboutNum = JSONObject(apiResponse).getString("text")
-
-                Fact?.text = "Fact: $FactAboutNum"
+            CoroutineScope(Dispatchers.IO).launch{
+                val response = API.randomFact().awaitResponse()
+                if (response.isSuccessful){
+                    val FactAboutNum = response.body()!!
+                    withContext(Dispatchers.Main){
+                        Fact?.text = "Fact: ${FactAboutNum.text}"
+                    }
 
                 }
             }
         }
-
-
-
     }
+
+
+    fun getFact(num: String) {
+        CoroutineScope(Dispatchers.IO).launch{
+            val response = API.fact(num).awaitResponse()
+            if (response.isSuccessful){
+                val FactAboutNum = response.body()!!
+                withContext(Dispatchers.Main){
+                    Fact?.text = "Fact: ${FactAboutNum.text}"
+                }
+            }
+        }
+    }
+}
