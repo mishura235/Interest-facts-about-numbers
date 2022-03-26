@@ -8,14 +8,42 @@
     android:clipToPadding="true"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/Date"
+        android:layout_width="155dp"
+        android:layout_height="157dp"
+        android:background="@drawable/custom_background_two"
+        android:textColor="#FFFFFF"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.937"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.151" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="155dp"
+        android:layout_height="39dp"
+        android:background="@drawable/custom_background"
+        android:gravity="center"
+        android:text="Date"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.937"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.069" />
+
     <Button
         android:id="@+id/get_fact2"
         android:layout_width="274dp"
         android:layout_height="58dp"
-
-
         android:layout_marginTop="10dp"
-        android:backgroundTint="#3F51B5"
+        android:backgroundTint="#6C51CD"
         android:drawablePadding="5dp"
         android:includeFontPadding="false"
         android:padding="5dp"
@@ -28,25 +56,56 @@
         android:text="Get random fact"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
-        app:cornerRadius="7dp"
+        app:cornerRadius="10dp"
         app:iconPadding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.525"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/get_fact"
-        app:layout_constraintVertical_bias="0.002" />
+        app:layout_constraintVertical_bias="0.023" />
+
+    <TextView
+        android:id="@+id/Fact"
+        android:layout_width="341dp"
+        android:layout_height="173dp"
+        android:fontFamily="@font/montserrat"
+        android:text=""
+        android:textColor="#FFFFFF"
+        android:textColorHighlight="#2196F3"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="266dp"
+        android:layout_height="53dp"
+        android:background="@drawable/custom_background"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="Enter the number"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.468"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.386" />
 
     <EditText
         android:id="@+id/user_num"
         android:layout_width="266dp"
         android:layout_height="48dp"
-        android:layout_marginStart="151dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="151dp"
-        android:layout_marginBottom="509dp"
         android:gravity="center_horizontal|center_vertical"
         android:hint="Your number"
+
         android:importantForAutofill="no"
         android:inputType="textPersonName"
         android:textColor="#F8F1F1"
@@ -56,57 +115,20 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text"
-        tools:ignore="LabelFor" />
-
-    <TextView
-        android:id="@+id/Fact"
-        android:layout_width="263dp"
-        android:layout_height="211dp"
-        android:fontFamily="@font/montserrat"
-        android:text=""
-        android:textColor="#FFFFFF"
-        android:textColorHighlight="#2196F3"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.486"
+        app:layout_constraintHorizontal_bias="0.468"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.757" />
-
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="264dp"
-        android:layout_height="57dp"
-        android:layout_marginStart="74dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="73dp"
-        android:layout_marginBottom="5dp"
-        android:fontFamily="@font/montserrat"
-        android:gravity="center_horizontal|center_vertical"
-        android:text="Enter the number"
-        android:textColor="#FFFFFF"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/user_num"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintVertical_bias="0.461"
+        tools:ignore="LabelFor" />
 
     <Button
         android:id="@+id/get_fact"
         android:layout_width="274dp"
         android:layout_height="58dp"
-        android:layout_marginStart="112dp"
+
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="113dp"
 
-
-        android:backgroundTint="#3F51B5"
+        android:backgroundTint="#6C51CD"
         android:drawablePadding="5dp"
         android:includeFontPadding="false"
         android:padding="5dp"
@@ -119,12 +141,43 @@
         android:text="Get fact"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
-        app:cornerRadius="7dp"
+        app:cornerRadius="10dp"
         app:iconPadding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_num"
-        app:layout_constraintVertical_bias="0.02" />
+        app:layout_constraintVertical_bias="0.068" />
+
+    <TextView
+        android:id="@+id/Math"
+        android:layout_width="155dp"
+        android:layout_height="157dp"
+        android:background="@drawable/custom_background_two"
+        android:textColor="#FFFFFF"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.058"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.151" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="155dp"
+        android:layout_height="39dp"
+        android:gravity="center"
+        android:text="Math"
+        android:background="@drawable/custom_background"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.058"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.069" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
