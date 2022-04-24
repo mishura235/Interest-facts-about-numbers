@@ -12,10 +12,4 @@ interface ApiRequests {
     @GET("random?json")
     fun randomFact(): Call<ApiJSON>
 
-    @GET("random/math?json")
-    fun getMath(): Call<ApiJSON>
-
-    @GET("random/date?json")
-    fun getDate(): Call<ApiJSON>
-
 }

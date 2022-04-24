@@ -7,6 +7,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,8 +23,7 @@ class MainActivity : AppCompatActivity() {
     private var Get_Fact: Button? = null
     private var Fact: TextView? = null
     lateinit var Get_Random: Button
-    lateinit var Date:TextView
-    lateinit var Math:TextView
+    lateinit var recyclerView: RecyclerView
     val URL = "http://numbersapi.com/"
     val API = Retrofit.Builder()
         .baseUrl(URL)
@@ -39,12 +40,11 @@ class MainActivity : AppCompatActivity() {
         Get_Fact = findViewById(R.id.get_fact)
         Fact = findViewById(R.id.Fact)
         Get_Random = findViewById(R.id.get_fact2)
-        Date = findViewById(R.id.Date)
-        Math = findViewById(R.id.Math)
+        recyclerView = findViewById(R.id.rcView)
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false)
+        recyclerView.adapter = CustomAdapter(fillList())
 
 
-        getDateFact()
-        getMathFact()
 
         Get_Fact?.setOnClickListener {
             if (User_Num?.text?.toString()?.trim()?.equals("")!!)
@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
             withContext(Dispatchers.Main) {
                 Toast.makeText(
                     applicationContext,
-                    "Seems like something went wrong...",
+                    "Seems like something went wrong in random fact",
                     Toast.LENGTH_SHORT
                 ).show()
                 }
@@ -99,59 +99,38 @@ class MainActivity : AppCompatActivity() {
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
                         applicationContext,
-                        "Seems like something went wrong...",
+                        "Seems like something went wrong in fact",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
             }
         }
     }
-    @SuppressLint("SetTextI18n")
-    fun getDateFact() {
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val response = API.getDate().awaitResponse()
-                if (response.isSuccessful) {
-                    val FactAboutDate = response.body()
-                    withContext(Dispatchers.Main) {
-                        Date.text = "Fact: ${FactAboutDate!!.text}"
+    private fun fillList(): List<String> {
+        val data = mutableListOf<String>()
+        repeat(10){
+            CoroutineScope(Dispatchers.IO).launch {
+                try{
+                    val response = API.randomFact().awaitResponse()
+                    if (response.isSuccessful) {
+                        val FactAboutNum = response.body()!!
+                        data.add(FactAboutNum.text)
+
                     }
-                }
-            } catch (e: Exception) {
-            withContext(Dispatchers.Main) {
-                Toast.makeText(
-                    applicationContext,
-                    "Seems like something went wrong...",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-        }
-    }
-    @SuppressLint("SetTextI18n")
-    fun getMathFact() {
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val response = API.getMath().awaitResponse()
-                if (response.isSuccessful) {
-                    val FactAboutDate = response.body()
+                }catch (e: Exception) {
                     withContext(Dispatchers.Main) {
-                        Math.text = "Fact: ${FactAboutDate!!.text}"
+                        Toast.makeText(
+                            applicationContext,
+                            "Seems like something went wrong in list of facts",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
-                }
-            } catch (e: Exception) {
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(
-                        applicationContext,
-                        "Seems like something went wrong...",
-                        Toast.LENGTH_SHORT
-                    ).show()
                 }
             }
         }
+
+        return data
     }
-
-
 
 
 }
