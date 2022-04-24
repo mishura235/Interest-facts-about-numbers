@@ -11,5 +11,4 @@ interface ApiRequests {
 
     @GET("random?json")
     fun randomFact(): Call<ApiJSON>
-
 }

@@ -17,67 +17,70 @@ import retrofit2.Retrofit
 import retrofit2.awaitResponse
 import retrofit2.converter.gson.GsonConverterFactory
 
+const val URL = "http://numbersapi.com/"
 
 class MainActivity : AppCompatActivity() {
-    private var User_Num: EditText? = null
-    private var Get_Fact: Button? = null
-    private var Fact: TextView? = null
-    lateinit var Get_Random: Button
-    lateinit var recyclerView: RecyclerView
-    val URL = "http://numbersapi.com/"
-    val API = Retrofit.Builder()
+    private var userNum: EditText? = null
+    private var getFact: Button? = null
+    private var tvFact: TextView? = null
+    private lateinit var getRandom: Button
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: CustomAdapter
+
+    private val apiRequests = Retrofit.Builder()
         .baseUrl(URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(ApiRequests::class.java)
 
+    private val data = mutableListOf<String>()
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        User_Num = findViewById(R.id.user_num)
-        Get_Fact = findViewById(R.id.get_fact)
-        Fact = findViewById(R.id.Fact)
-        Get_Random = findViewById(R.id.get_fact2)
+        userNum = findViewById(R.id.user_num)
+        getFact = findViewById(R.id.get_fact)
+        tvFact = findViewById(R.id.Fact)
+        getRandom = findViewById(R.id.get_fact2)
         recyclerView = findViewById(R.id.rcView)
-        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false)
-        recyclerView.adapter = CustomAdapter(fillList())
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        adapter = CustomAdapter()
+        recyclerView.adapter = adapter
 
+        fillList()
 
-
-        Get_Fact?.setOnClickListener {
-            if (User_Num?.text?.toString()?.trim()?.equals("")!!)
+        getFact?.setOnClickListener {
+            if (userNum?.text?.toString()?.trim()?.equals("")!!)
                 Toast.makeText(this, "Enter the number", Toast.LENGTH_LONG).show()
             else {
-                val num = User_Num?.text.toString()
-
+                val num = userNum?.text.toString()
                 getFact(num)
             }
         }
 
-        Get_Random.setOnClickListener {
+        getRandom.setOnClickListener {
             getRandom()
         }
     }
 
-    fun getRandom(){
+    private fun getRandom() {
         CoroutineScope(Dispatchers.IO).launch {
-            try{
-            val response = API.randomFact().awaitResponse()
-            if (response.isSuccessful) {
-                val FactAboutNum = response.body()!!
-                withContext(Dispatchers.Main) {
-                    Fact?.text = "Fact: ${FactAboutNum.text}"
+            try {
+                val response = apiRequests.randomFact().awaitResponse()
+                if (response.isSuccessful) {
+                    val factAboutNum = response.body()!!
+                    withContext(Dispatchers.Main) {
+                        tvFact?.text = "Fact: ${factAboutNum.text}"
+                    }
                 }
-            }
-        }catch (e: Exception) {
-            withContext(Dispatchers.Main) {
-                Toast.makeText(
-                    applicationContext,
-                    "Seems like something went wrong in random fact",
-                    Toast.LENGTH_SHORT
-                ).show()
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        applicationContext,
+                        "Seems like something went wrong in random fact",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -87,12 +90,12 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     fun getFact(num: String) {
         CoroutineScope(Dispatchers.IO).launch {
-            try{
-            val response = API.fact(num).awaitResponse()
-            if (response.isSuccessful) {
-                val FactAboutNum = response.body()!!
-                withContext(Dispatchers.Main) {
-                    Fact?.text = "Fact: ${FactAboutNum.text}"
+            try {
+                val response = apiRequests.fact(num).awaitResponse()
+                if (response.isSuccessful) {
+                    val factAboutNum = response.body()!!
+                    withContext(Dispatchers.Main) {
+                        tvFact?.text = "Fact: ${factAboutNum.text}"
                     }
                 }
             } catch (e: java.lang.Exception) {
@@ -106,18 +109,18 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-    private fun fillList(): List<String> {
-        val data = mutableListOf<String>()
-        repeat(10){
-            CoroutineScope(Dispatchers.IO).launch {
-                try{
-                    val response = API.randomFact().awaitResponse()
-                    if (response.isSuccessful) {
-                        val FactAboutNum = response.body()!!
-                        data.add(FactAboutNum.text)
 
+    private fun fillList() {
+        repeat(10) {
+            CoroutineScope(Dispatchers.Main).launch {
+                try {
+                    val response = apiRequests.randomFact().awaitResponse()
+                    if (response.isSuccessful) {
+                        val factAboutNum = response.body()!!
+                        data.add(factAboutNum.text)
+                        adapter.addData(factAboutNum.text) // закидываем данные в адаптер (мне так больше нравится) :)
                     }
-                }catch (e: Exception) {
+                } catch (e: Exception) {
                     withContext(Dispatchers.Main) {
                         Toast.makeText(
                             applicationContext,
@@ -128,9 +131,5 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
-        return data
     }
-
-
 }
