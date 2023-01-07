@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class CustomAdapter : RecyclerView.Adapter<CustomAdapter.MyViewHolder>() {
+class FactListAdapter : RecyclerView.Adapter<FactListAdapter.MyViewHolder>() {
 
     private var facts = mutableListOf<String>()
 
@@ -24,7 +24,7 @@ class CustomAdapter : RecyclerView.Adapter<CustomAdapter.MyViewHolder>() {
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.listTextView.text = facts[position]
-        holder.nameTextView.text = "Fact №$position"
+        holder.nameTextView.text = "Fact №${position+1}"
     }
 
 
@@ -32,8 +32,8 @@ class CustomAdapter : RecyclerView.Adapter<CustomAdapter.MyViewHolder>() {
         return facts.size
     }
 
-    fun addData(fact: String) {
-        facts.add(fact)
+    fun setFacts(facts: MutableList<String>) {
+        this.facts = facts
         notifyDataSetChanged()
     }
 
