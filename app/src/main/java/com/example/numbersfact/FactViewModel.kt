@@ -4,17 +4,15 @@ import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.numbersfact.api.ApiRequests
 import com.example.numbersfact.api.ApiService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
-import retrofit2.Retrofit
 import retrofit2.awaitResponse
-import retrofit2.converter.gson.GsonConverterFactory
 
 class FactViewModel : ViewModel() {
-
+    private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
     private val retrofit = ApiService.retrofitService
 
     private var _listOfFacts: MutableLiveData<MutableList<String>> =
@@ -30,7 +28,7 @@ class FactViewModel : ViewModel() {
 
     @SuppressLint("SetTextI18n")
     fun updateFact(num: String) {
-        CoroutineScope(Dispatchers.IO).launch {
+        scope.launch {
             try {
                 if (num == "random") {
                     val response = retrofit.getRandomFact().awaitResponse()
@@ -48,7 +46,7 @@ class FactViewModel : ViewModel() {
     }
 
     fun updateFactList() {
-        CoroutineScope(Dispatchers.IO).launch {
+        scope.launch {
             try {
                 val result = mutableListOf<String>()
                 repeat(10) {
@@ -61,5 +59,10 @@ class FactViewModel : ViewModel() {
                 Log.d("ViewModel", "Error in updateFactList")
             }
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        scope.cancel()
     }
 }
