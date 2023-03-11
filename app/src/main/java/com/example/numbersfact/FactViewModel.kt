@@ -11,6 +11,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import retrofit2.awaitResponse
 
+ // TODO Add viewmodel factory
 class FactViewModel : ViewModel() {
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
     private val retrofit = ApiService.retrofitService
