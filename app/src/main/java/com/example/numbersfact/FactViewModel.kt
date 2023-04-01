@@ -4,20 +4,21 @@ import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.numbersfact.api.ApiRequests
 import com.example.numbersfact.api.ApiService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import retrofit2.Retrofit
 import retrofit2.awaitResponse
 
- // TODO Add viewmodel factory
-class FactViewModel : ViewModel() {
-    private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
-    private val retrofit = ApiService.retrofitService
 
-    private var _listOfFacts: MutableLiveData<MutableList<String>> =
-        MutableLiveData(mutableListOf())
+class FactViewModel(private val retrofit: ApiRequests) : ViewModel() {
+    private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
+
+    private var _listOfFacts: MutableLiveData<MutableList<String>> = MutableLiveData(mutableListOf())
+
     private var _fact: MutableLiveData<String> = MutableLiveData()
 
     val listOfFacts: MutableLiveData<MutableList<String>>
@@ -27,7 +28,7 @@ class FactViewModel : ViewModel() {
         get() = _fact
 
 
-    @SuppressLint("SetTextI18n")
+
     fun updateFact(num: String) {
         scope.launch {
             try {

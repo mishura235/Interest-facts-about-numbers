@@ -10,21 +10,23 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcView"
-        android:layout_width="408dp"
+        android:layout_width="match_parent"
         android:layout_height="207dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/Fact"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        tools:listitem="@layout/rcview_item" />
+        tools:listitem="@layout/fact_recyclerview_item" />
 
     <Button
         android:id="@+id/get_fact2"
-        android:layout_width="274dp"
+        android:layout_width="match_parent"
         android:layout_height="58dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="68dp"
         android:backgroundTint="#6C51CD"
         android:drawablePadding="5dp"
         android:includeFontPadding="false"
@@ -40,17 +42,17 @@
         android:textStyle="bold"
         app:cornerRadius="10dp"
         app:iconPadding="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/get_fact"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintTop_toBottomOf="@+id/get_fact" />
 
     <TextView
         android:id="@+id/Fact"
-        android:layout_width="341dp"
+        android:layout_width="match_parent"
         android:layout_height="173dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:fontFamily="@font/montserrat"
         android:text=""
         android:textColor="#FFFFFF"
@@ -65,8 +67,11 @@
 
     <TextView
         android:id="@+id/text"
-        android:layout_width="266dp"
+        android:layout_width="match_parent"
         android:layout_height="53dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="72dp"
         android:background="@drawable/custom_background"
         android:fontFamily="@font/montserrat"
         android:gravity="center_horizontal|center_vertical"
@@ -74,20 +79,22 @@
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/Fact"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.468"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.386" />
+        app:layout_constraintTop_toBottomOf="@+id/rcView"
+        app:layout_constraintVertical_bias="0.055" />
 
     <EditText
         android:id="@+id/user_num"
-        android:layout_width="266dp"
+        android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginEnd="72dp"
+        android:background="@drawable/custom_background_two"
         android:gravity="center_horizontal|center_vertical"
         android:hint="Your number"
-        android:background="@drawable/custom_background_two"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
         android:textColor="#F8F1F1"
@@ -97,19 +104,19 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.468"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.461"
+        app:layout_constraintTop_toBottomOf="@+id/text"
+        app:layout_constraintVertical_bias="0.0"
         tools:ignore="LabelFor" />
 
     <Button
         android:id="@+id/get_fact"
-        android:layout_width="274dp"
+        android:layout_width="match_parent"
         android:layout_height="58dp"
-
-        android:layout_marginTop="10dp"
-
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="68dp"
         android:backgroundTint="#6C51CD"
         android:drawablePadding="5dp"
         android:includeFontPadding="false"
@@ -125,11 +132,8 @@
         android:textStyle="bold"
         app:cornerRadius="10dp"
         app:iconPadding="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_num"
-        app:layout_constraintVertical_bias="0.068" />
+        app:layout_constraintTop_toBottomOf="@+id/user_num" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.numbersfact.api.ApiService
 
 
 class MainActivity : AppCompatActivity() {
@@ -22,20 +23,20 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: FactListAdapter
 
 
-    @SuppressLint("SetTextI18n")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val viewModel: FactViewModel = ViewModelProvider(this).get(FactViewModel::class.java)
+        val viewModel: FactViewModel = ViewModelProvider(this,FactViewModelFactory(ApiService.retrofitService)).get(FactViewModel::class.java)
 
-        viewModel.fact.observe(this, Observer {
+        viewModel.fact.observe(this) {
             tvFact.text = viewModel.fact.value
-        })
+        }
 
-        viewModel.listOfFacts.observe(this,Observer{
+        viewModel.listOfFacts.observe(this) {
             adapter.setFacts(viewModel.listOfFacts.value ?: mutableListOf())
-        })
+        }
 
         userNum = findViewById(R.id.user_num)
         getFact = findViewById(R.id.get_fact)

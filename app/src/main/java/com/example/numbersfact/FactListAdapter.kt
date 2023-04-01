@@ -18,7 +18,7 @@ class FactListAdapter : RecyclerView.Adapter<FactListAdapter.MyViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView =
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.rcview_item, parent, false)
+                .inflate(R.layout.fact_recyclerview_item, parent, false)
         return MyViewHolder(itemView)
     }
 
@@ -37,7 +37,7 @@ class FactListAdapter : RecyclerView.Adapter<FactListAdapter.MyViewHolder>() {
         notifyDataSetChanged()
     }
 
-    // TODO Это можно будет использовать для очистки RV - как пример.
+
     fun clearData(){
         facts.clear()
         notifyDataSetChanged()
