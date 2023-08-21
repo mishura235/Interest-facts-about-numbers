@@ -1,17 +1,16 @@
 package com.example.numbersfact
 
-import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.numbersfact.api.ApiService
+import com.example.numbersfact.recyclerview.FactListAdapter
 
 
 class MainActivity : AppCompatActivity() {
@@ -28,15 +27,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val viewModel: FactViewModel = ViewModelProvider(this,FactViewModelFactory(ApiService.retrofitService)).get(FactViewModel::class.java)
 
-        viewModel.fact.observe(this) {
-            tvFact.text = viewModel.fact.value
-        }
-
-        viewModel.listOfFacts.observe(this) {
-            adapter.setFacts(viewModel.listOfFacts.value ?: mutableListOf())
-        }
+        val viewModel: FactViewModel = ViewModelProvider(this,FactViewModelFactory(ApiService.retrofitService))
+            .get(FactViewModel::class.java)
 
         userNum = findViewById(R.id.user_num)
         getFact = findViewById(R.id.get_fact)
@@ -49,6 +42,16 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView.adapter = adapter
 
+        viewModel.fact.observe(this) {
+            tvFact.text = viewModel.fact.value
+        }
+
+        viewModel.listOfFacts.observe(this) {
+            adapter.setFacts(viewModel.listOfFacts.value ?: mutableListOf())
+        }
+
+
+
         viewModel.updateFactList()
 
 
@@ -57,17 +60,12 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Enter the number", Toast.LENGTH_LONG).show()
             else {
                 val num = userNum.text.toString()
-                viewModel.updateFact(num)
+                viewModel.updateFactByNumber(num)
             }
         }
 
         getRandom.setOnClickListener {
-            viewModel.updateFact("random")
+            viewModel.updateFactRandomized();
         }
-
-
-
     }
-
-
 }

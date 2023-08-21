@@ -29,7 +29,7 @@ class FactViewModel(private val retrofit: ApiRequests) : ViewModel() {
 
 
 
-    fun updateFact(num: String) {
+    fun updateFactByNumber(num: String) {
         scope.launch {
             try {
                 if (num == "random") {
@@ -41,6 +41,17 @@ class FactViewModel(private val retrofit: ApiRequests) : ViewModel() {
                     val factAboutNum = response.body()!!
                     _fact.postValue(factAboutNum.text)
                 }
+            } catch (e: java.lang.Exception) {
+                Log.d("ViewModel", "Error in updateFact")
+            }
+        }
+    }
+    fun updateFactRandomized() {
+        scope.launch {
+            try {
+                val response = retrofit.getRandomFact().awaitResponse()
+                val factAboutNum = response.body()!!
+                _fact.postValue(factAboutNum.text)
             } catch (e: java.lang.Exception) {
                 Log.d("ViewModel", "Error in updateFact")
             }

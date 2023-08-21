@@ -18,10 +18,10 @@ interface ApiRequests {
     @GET("{number}?json")
     fun getFact(
         @Path("number") number: String
-    ): Call<ApiJSON>
+    ): Call<Task>
 
     @GET("random?json")
-    fun getRandomFact(): Call<ApiJSON>
+    fun getRandomFact(): Call<Task>
 }
 
 object ApiService {

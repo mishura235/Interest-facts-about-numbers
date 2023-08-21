@@ -1,10 +1,12 @@
-package com.example.numbersfact
+package com.example.numbersfact.recyclerview
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.numbersfact.R
 
 class FactListAdapter : RecyclerView.Adapter<FactListAdapter.MyViewHolder>() {
 
@@ -33,8 +35,10 @@ class FactListAdapter : RecyclerView.Adapter<FactListAdapter.MyViewHolder>() {
     }
 
     fun setFacts(facts: MutableList<String>) {
+        val diffUtil = FactsDiffUtil(this.facts,facts)
+        val diffResult = DiffUtil.calculateDiff(diffUtil)
         this.facts = facts
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
     }
 
 

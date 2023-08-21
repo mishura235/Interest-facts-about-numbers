@@ -1,6 +1,6 @@
 package com.example.numbersfact.api
 
-data class ApiJSON(
+data class Task(
     val text:String,
     val number:Double,
     val found:Boolean,
